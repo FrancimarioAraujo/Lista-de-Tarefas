@@ -1,0 +1,17 @@
+{
+    "tasks": "Tarefas",
+    "emptyTrash": "Lixeira Vazia",
+    "trash": "Lixeira",
+    "thereAreNoTasks": "Não há tarefas",
+    "clear": "Limpar",
+    "clearTrash": "Esvaziar Lixeira",
+    "cancel": "Cancelar",
+    "warningCleanTrashPermanently": "Se clicar em 'Esvaziar', todas as tarefas da lixeira serão apagadas permanentemente!",
+    "cleanTrash": "Lixeira limpa",
+    "addNewTask": "Adicionar nova tarefa",
+    "create": "Criar",
+    "name": "Nome",
+    "pleaseTypeTheNameTask": "Por favor digite o nome da tarefa",
+    "itemsRestoredFromTrash": "Itens restaurados da lixeira",
+    "taskChecked": "Atividade marcada como concluida!"
+}
