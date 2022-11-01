@@ -1,11 +1,9 @@
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
-import 'package:click/app/modules/routine/view/components/card_routine.dart';
 import 'package:click/app/modules/routine/view/components/new_routine_alert_dialog.dart';
-import 'package:click/assets/constants.dart';
+import 'package:click/app/modules/routine/view/pages/routine_concluded_body_page.dart';
+import 'package:click/app/modules/routine/view/pages/routine_peding_body_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:localization/localization.dart';
 
 class RoutinePage extends StatefulWidget {
@@ -19,62 +17,51 @@ class _RoutinePageState extends State<RoutinePage> {
   final routinesController = Modular.get<RoutineController>();
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    routinesController.fetchRoutines();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    ColorScheme themeColor = Theme.of(context).colorScheme;
-    ScreenUtil.init(context,
-        designSize: const Size(
-            Constants.WIDTH_DEVICE_DEFAULT, Constants.HEIGHT_DEVICE_DEFAULT));
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("tasks".i18n()),
-      ),
-      body: Observer(
-        builder: (_) {
-          if (routinesController.isLoading) {
-            return Center(
-              child: CircularProgressIndicator(
-                color: themeColor.secondary,
+    return DefaultTabController(
+      initialIndex: 1,
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text("tasks".i18n()),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.search,
               ),
-            );
-          }
-          if (routinesController.routines.isEmpty) {
-            return Center(
-              child: Text(
-                "thereAreNoTasks".i18n(),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.sp,
-                ),
+            ),
+          ],
+          bottom: const TabBar(
+            tabs: <Widget>[
+              Tab(
+                text: "Pendentes",
+                icon: Icon(Icons.pending_actions_rounded),
               ),
+              Tab(
+                text: "Concluidas",
+                icon: Icon(Icons.check),
+              ),
+            ],
+          ),
+        ),
+        body: const TabBarView(
+          children: [
+            RoutinePedingBodyPage(),
+            RoutineConcludedBodyPage(),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          heroTag: "addNewRoutine",
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => NewRoutineAlertDialog(),
             );
-          }
-
-          return Observer(builder: (_) {
-            return ListView.builder(
-              itemCount: routinesController.routines.length,
-              itemBuilder: (context, index) {
-                return CardRoutine(routinesController.routines[index]);
-              },
-            );
-          });
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: "addNewRoutine",
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => NewRoutineAlertDialog(),
-          );
-        },
-        child: const Icon(Icons.add),
+          },
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }

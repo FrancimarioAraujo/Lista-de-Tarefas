@@ -18,6 +18,14 @@ abstract class _RoutineController with Store {
   @observable
   bool isLoading = false;
 
+  @computed
+  List<RoutineModel> get routinesConcluded =>
+      routines.where((routine) => routine.concluded).toList();
+
+  @computed
+  List<RoutineModel> get routinesPending =>
+      routines.where((routine) => !routine.concluded).toList();
+
   String _generateNewRoutineId() {
     return _uuid.v4();
   }

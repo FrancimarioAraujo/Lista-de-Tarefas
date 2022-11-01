@@ -9,6 +9,21 @@ part of 'routine_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$RoutineController on _RoutineController, Store {
+  Computed<List<RoutineModel>>? _$routinesConcludedComputed;
+
+  @override
+  List<RoutineModel> get routinesConcluded => (_$routinesConcludedComputed ??=
+          Computed<List<RoutineModel>>(() => super.routinesConcluded,
+              name: '_RoutineController.routinesConcluded'))
+      .value;
+  Computed<List<RoutineModel>>? _$routinesPendingComputed;
+
+  @override
+  List<RoutineModel> get routinesPending => (_$routinesPendingComputed ??=
+          Computed<List<RoutineModel>>(() => super.routinesPending,
+              name: '_RoutineController.routinesPending'))
+      .value;
+
   late final _$routinesAtom =
       Atom(name: '_RoutineController.routines', context: context);
 
@@ -87,7 +102,9 @@ mixin _$RoutineController on _RoutineController, Store {
   String toString() {
     return '''
 routines: ${routines},
-isLoading: ${isLoading}
+isLoading: ${isLoading},
+routinesConcluded: ${routinesConcluded},
+routinesPending: ${routinesPending}
     ''';
   }
 }
